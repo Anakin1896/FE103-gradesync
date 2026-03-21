@@ -1,3 +1,18 @@
 from django.db import models
 
-# Create your models here.
+class Section(models.Model):
+    section_id = models.AutoField(primary_key=True)
+    program = models.ForeignKey('core.Program', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    year_level = models.IntegerField(null=True, blank=True)
+
+class Student(models.Model):
+    student_id = models.AutoField(primary_key=True)
+    student_number = models.CharField(unique=True, max_length=20)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    middle_name = models.CharField(max_length=100, null=True, blank=True)
+    email = models.CharField(max_length=100, null=True, blank=True)
+    program = models.ForeignKey('core.Program', on_delete=models.SET_NULL, null=True, blank=True)
+    current_year_level = models.IntegerField(default=1)
+    is_regular = models.BooleanField(default=True)
